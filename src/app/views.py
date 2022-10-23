@@ -19,14 +19,24 @@ csrf = CSRFProtect(app)
 @app.route('/index/', methods=["GET", "POST"])
 def index():
     form = Analogy()
+    if form.validate_on_submit():
+        return redirect(url_for('analogy'))
     return render_template('index.html', form=form)
 
 @app.route('/index/tool/', methods=["GET", "POST"])
 def tool():
     form = Analogy()
     if form.validate_on_submit():
-        return redirect(url_for('tool'))  # TODO
-    return render_template('tool.html', form=form) 
+        return redirect(url_for('analogy'))  # TODO
+    return render_template('tool.html', form=form)
+
+@app.route('/analogy/', methods=["GET", "POST"])
+def analogy():
+    # TODO
+    form = Analogy()
+    if form.validate_on_submit():
+        return redirect(url_for('analogy'))
+    return render_template('analogy.html', form=form)  
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
