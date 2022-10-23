@@ -2,7 +2,7 @@
   "name": "Cross-lingual analogy",
   "description": "Nothing much to say",
   "logo": "",
-  "repository": "",
+  "repository": "https://github.com/2022-2023-M2-NLP-Group-5/sandbox",
   "image": "heroku/python",
   "addons": "",
   "buildpacks": [
