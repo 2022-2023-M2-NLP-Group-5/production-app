@@ -15,7 +15,7 @@ bootstrap = Bootstrap(app)
 csrf = CSRFProtect(app)
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 @app.route('/index/', methods=["GET", "POST"])
 def index():
     form = Analogy()
@@ -33,10 +33,10 @@ def tool():
 @app.route('/analogy/', methods=["GET", "POST"])
 def analogy():
     # TODO
-    form = Analogy()
-    if form.validate_on_submit():
-        return redirect(url_for('analogy'))
-    return render_template('analogy.html', form=form)  
+    #form = Analogy()
+    #if form.validate_on_submit():
+        #return redirect(url_for('analogy'))
+    return render_template('analogy.html')  
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
