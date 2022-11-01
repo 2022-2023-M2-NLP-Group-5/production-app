@@ -17,14 +17,19 @@
 1.  [Yating Zhang, Adam Jatowt, Sourav Bhowmick, and Katsumi Tanaka. 2015. Omnia mutantur, nihil interit: Connecting past with present by finding corresponding terms across time.](https://aclanthology.org/P15-1063.pdf)
       - main finding: using reference points (like an analogy pair) is better than just doing a global search
 3.  [Andrey Kutuzov, Erik Velldal, and Lilja Øvrelid. 2017a. Temporal dynamics of semanticrelations in word embeddings: an application to predicting armed conflict participants.](https://arxiv.org/pdf/1707.08660.pdf)
-4.  [Guy D. Rosin, Eytan Adar, and Kira Radinsky. 2017. Learning word relatedness over time.](https://arxiv.org/pdf/1707.08081.pdf%C2%A0%E2%86%A9%EF%B8%8E%C2%A0%E2%86%A9%EF%B8%8E)
+      - main finding: incremental updating of models and vocabulary is important 
+      - methodology: CBOW / word2vec
 
 ## data
 1. [google books ngram](https://storage.googleapis.com/books/ngrams/books/datasetsv3.html)
 2. [Test Data for SemEval-2020 Task 1: Unsupervised Lexical Semantic Change Detection](https://www.ims.uni-stuttgart.de/en/research/resources/corpora/sem-eval-ulscd/)
 3. [Various evaluation benchmarks regarding semantic analogies for English and for German (uni stuttgart)](https://www.ims.unistuttgart.de/en/research/resources/lexica/analogies/)
 4. [Google analogy test set by Mikolov 2013 (State of the art)](https://aclweb.org/aclwiki/Google_analogy_test_set_(State_of_the_art))
+5. [YAGO2: a automatically extracted, temporal, relational corpus](https://yago-knowledge.org/) - used in Guy et al , 2017
 
 ## codebase
 1. [Terrence Szymanski. 2017. Temporal word analogies: Identifying lexical replacement with diachronic word embeddings.](https://researchrepository.ucd.ie/bitstream/10197/9166/1/insight_publication.pdf) [<ins>github</ins>](https://github.com/tdszyman/twapy)
    - methodology: train vector spaces independently for each time period, then map into a common space via matrix transformation
+2. [Guy D. Rosin, Eytan Adar, and Kira Radinsky. 2017. Learning word relatedness over time.](https://arxiv.org/pdf/1707.08081.pdf%C2%A0%E2%86%A9%EF%B8%8E%C2%A0%E2%86%A9%EF%B8%8E)[<ins>github</ins>](https://github.com/guyrosin/learning-word-relatedness)
+   - identifies semantic relatedness (eg. obama-president), not semantic similarity 
+   - methodology: CBOW / word2vec; skipgram
