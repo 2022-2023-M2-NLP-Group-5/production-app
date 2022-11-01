@@ -25,7 +25,7 @@
 2. [Test Data for SemEval-2020 Task 1: Unsupervised Lexical Semantic Change Detection](https://www.ims.uni-stuttgart.de/en/research/resources/corpora/sem-eval-ulscd/)
 3. [Various evaluation benchmarks regarding semantic analogies for English and for German (uni stuttgart)](https://www.ims.unistuttgart.de/en/research/resources/lexica/analogies/)
 4. [Google analogy test set by Mikolov 2013 (State of the art)](https://aclweb.org/aclwiki/Google_analogy_test_set_(State_of_the_art))
-5. [YAGO2: a automatically extracted, temporal, relational corpus](https://yago-knowledge.org/) - used in Guy et al , 2017
+5. [YAGO2: a automatically extracted, temporal, relational corpus](https://yago-knowledge.org/) - used in Rosin et al , 2017
 
 ## codebase
 1. [Terrence Szymanski. 2017. Temporal word analogies: Identifying lexical replacement with diachronic word embeddings.](https://researchrepository.ucd.ie/bitstream/10197/9166/1/insight_publication.pdf) [<ins>github</ins>](https://github.com/tdszyman/twapy)
