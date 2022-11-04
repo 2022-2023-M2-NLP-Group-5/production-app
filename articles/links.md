@@ -33,3 +33,4 @@
 2. [Guy D. Rosin, Eytan Adar, and Kira Radinsky. 2017. Learning word relatedness over time.](https://arxiv.org/pdf/1707.08081.pdf%C2%A0%E2%86%A9%EF%B8%8E%C2%A0%E2%86%A9%EF%B8%8E)[<ins>github</ins>](https://github.com/guyrosin/learning-word-relatedness)
    - identifies semantic relatedness (eg. obama-president), not semantic similarity 
    - methodology: CBOW / word2vec; skipgram
+3. [BOS at SemEval-2020 Task 1: Word Sense Induction via Lexical Substitution for Lexical Semantic Change Detection](https://aclanthology.org/2020.semeval-1.20.pdf) [<ins>github</ins>](https://github.com/Garrafao/LSCDetection#pipelines)
