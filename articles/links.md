@@ -34,3 +34,4 @@
    - identifies semantic relatedness (eg. obama-president), not semantic similarity 
    - methodology: CBOW / word2vec; skipgram
 3. [BOS at SemEval-2020 Task 1: Word Sense Induction via Lexical Substitution for Lexical Semantic Change Detection](https://aclanthology.org/2020.semeval-1.20.pdf) [<ins>github</ins>](https://github.com/Garrafao/LSCDetection#pipelines)
+      - does not use analogies
