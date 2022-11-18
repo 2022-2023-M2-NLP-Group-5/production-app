@@ -3,14 +3,40 @@
 
 {% block content %}
     <div class="py-5 text-center">
-        <div class="container my-5">
+    <!--   <div class="container my-5">
             <img src="{{url_for('static', filename='graph.png')}}" id="mock_graph" style="width: 1000px; max-height: 1000px;">
         </div>
     
         <div class="container my-5">
             <img src="{{url_for('static', filename='mock_table.png')}}" id="mock_table" style="width: 1000px; max-height: 1000px;">
-        </div>
+        </div>  --> 
+        {{ div|safe }}
+    
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+
+        {{ script|safe }}
+
     </div>
+
+    <div class="py-5 text-center">
+        <!--   <div class="container my-5">
+                <img src="{{url_for('static', filename='graph.png')}}" id="mock_graph" style="width: 1000px; max-height: 1000px;">
+            </div>
+        
+            <div class="container my-5">
+                <img src="{{url_for('static', filename='mock_table.png')}}" id="mock_table" style="width: 1000px; max-height: 1000px;">
+            </div>  --> 
+            {{ div2|safe }}
+
+    
+            {{ script2|safe }}
+    
+        </div>
 
 
     <div class="my-4 shadow-sm">

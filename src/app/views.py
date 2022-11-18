@@ -3,6 +3,12 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import CSRFProtect
 from .contact import Contact
 from .tool import Analogy
+from bokeh.plotting import figure
+from bokeh.embed import components
+import pandas as pd
+from .clusters_visu import Clusters_Visualization
+from .test_visu import Clusters_Visualization2
+
 
 app = Flask(__name__)
 
@@ -36,7 +42,26 @@ def analogy():
     #form = Analogy()
     #if form.validate_on_submit():
         #return redirect(url_for('analogy'))
-    return render_template('analogy.html')  
+
+    #d = {"Word": ["gay", "saaa", "nini", "ibio", "hoih io", "fifioz", "ifofioezhoi", "bfi"], "Year": [1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020], "Score": [18, 90, 1920, 40,60,80,20,20]}
+    #print(len(d['Word']), len(d['Year']), len(d["Year"])) # Print all of them out here
+    #df = pd.DataFrame(d)   
+    
+    plot = Clusters_Visualization().plot
+    plot2 = Clusters_Visualization2().plot
+
+    #plot = figure(title="Résultats",x_axis_label="Date", x_axis_type='datetime', y_axis_label="Note", toolbar_location="above",
+    #       plot_width=1200, plot_height=500, sizing_mode="stretch_width", tooltips = TOOLTIPS)
+    #plot.line(x,y, line_width= 2)
+    #plot.add_tools(HoverTool(tooltips=None, renderers=[cr], mode='hline'))
+
+    script, div = components(plot)
+    script2, div2 = components(plot2)
+    return render_template('analogy.html',         
+        script= script,
+        div = div,
+        script2 = script2,
+        div2 = div2)  
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
