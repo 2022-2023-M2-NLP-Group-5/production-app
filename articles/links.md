@@ -12,6 +12,11 @@
 4. [Mind the Gap: Assessing Temporal Generalization in Neural Language Models, 2021](https://proceedings.neurips.cc/paper/2021/file/f5bf0ba0a17ef18f9607774722f5698c-Paper.pdf)
 5. [Diachronic word embeddings and semantic shifts: a survey, 2018](https://arxiv.org/pdf/1806.03537.pdf)
 6. [SemEval-2020 Task 1: Unsupervised Lexical Semantic Change Detection](https://aclanthology.org/2020.semeval-1.1.pdf) - manually annotated test set available [<ins>talk</ins>](https://underline.io/lecture/6403-semeval-2020-task-1-unsupervised-lexical-semantic-change-detection)
+7. Martinc, M. et al. (2020). COVID-19 Therapy Target Discovery with Context-Aware Literature Mining. In: Appice, A., Tsoumakas, G., Manolopoulos, Y., Matwin, S. (eds) Discovery Science. DS 2020. Lecture Notes in Computer Science(), vol 12323. Springer, Cham. https://doi.org/10.1007/978-3-030-61527-7_8
+8. Leveraging Contextual Embeddings for Detecting Diachronic Semantic Shift https://arxiv.org/abs/1912.01072
+     - https://gitlab.com/matej.martinc/semantic_shift_detection
+9. Syrielle Montariol, Matej Martinc, and Lidia Pivovarova. 2021. Scalable and Interpretable Semantic Change Detection. In Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pages 4642–4652, Online. Association for Computational Linguistics. https://aclanthology.org/2021.naacl-main.369/
+      - https://github.com/matejMartinc/scalable_semantic_shift
 
 ### on using analogy to detect diachronic semantic change (also see codebase)
 1.  [Yating Zhang, Adam Jatowt, Sourav Bhowmick, and Katsumi Tanaka. 2015. Omnia mutantur, nihil interit: Connecting past with present by finding corresponding terms across time.](https://aclanthology.org/P15-1063.pdf)
@@ -35,3 +40,5 @@
    - methodology: CBOW / word2vec; skipgram
 3. [BOS at SemEval-2020 Task 1: Word Sense Induction via Lexical Substitution for Lexical Semantic Change Detection](https://aclanthology.org/2020.semeval-1.20.pdf) [<ins>github</ins>](https://github.com/Garrafao/LSCDetection#pipelines)
       - does not use analogies
+
+
