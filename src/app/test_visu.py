@@ -1,3 +1,6 @@
+#---------------------------------------------#
+# DEPRECATED BUT STILL USEFUL FOR EXPERIMENTS
+#---------------------------------------------#
 import random
 from random import randint
 from bokeh.models import (Arrow, ColumnDataSource, CustomJS, Label,
@@ -5,6 +8,8 @@ from bokeh.models import (Arrow, ColumnDataSource, CustomJS, Label,
 from bokeh.plotting import figure, show
 from bokeh.sampledata.sprint import sprint
 import pandas as pd
+
+from app.visu_utils import results_all_periods
 
 
 fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
@@ -41,8 +46,9 @@ class Clusters_Visualization2():
     #def __init__(self, data):
     #    self.source = ColumnDataSource(data)
 
-    data = sprint
-    data = map_names(data)
+    #data = sprint
+    #data = map_names(data)
+    data = results_all_periods("/home/mathilde/Documents/S9 Project/sandbox/src/")  #TODO change path
 
     source = ColumnDataSource(data)
 
@@ -50,16 +56,16 @@ class Clusters_Visualization2():
 
     tooltips = """
     <div>
-        <span style="font-size: 15px;">@Name</span>&nbsp;
+        <span style="font-size: 15px;">@word</span>&nbsp;
     </div>
     <div>
-        <span style="font-size: 17px; font-weight: bold;">@Time</span>&nbsp;
+        <span style="font-size: 17px; font-weight: bold;">@Score</span>&nbsp;
     </div>
     """
 
     # {0.00}
 
-    plot = figure(width=1000, height=700, x_range=(sprint.MetersBack.max()+2, 0),
+    plot = figure(width=1000, height=700, #x_range=(sprint.MetersBack.max()+2, 0),
                 toolbar_location=None, outline_line_color=None,
                 y_axis_location="left", tooltips=tooltips)
     plot.y_range.range_padding = 4
@@ -78,11 +84,11 @@ class Clusters_Visualization2():
     plot.yaxis.major_tick_out = 10
     plot.ygrid.grid_line_color = None
 
-    medal = plot.circle(x="MetersBack", y="Year", size=10, source=source, level="overlay",
-                        fill_color="MedalFill", line_color="MedalLine", fill_alpha=0.5)
+    medal = plot.circle(x="Year", y="Score", size=10, source=source, level="overlay",  # x="MetersBack"
+                        fill_color="Color", line_color="Color", fill_alpha=0.5)
     plot.hover.renderers = [medal]
 
-    plot.text(x="MetersBack", y="Year", x_offset=10, y_offset=-5,
+    plot.text(x="Year", y="Score", x_offset=10, y_offset=-5,  #x="MetersBack", y="Year"
             text="SelectedName", text_align="left", text_baseline="middle",
             text_font_size="12px", source=source)
 

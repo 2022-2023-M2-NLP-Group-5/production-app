@@ -15,14 +15,12 @@ def read_results_one_period(res_file):
     """
     :str: res_file : CSV output of measure_semantic_shift.py
 
-    Read the CSV file from the measure_semantic_shift.py and wrap it into an nice formatted dataframe for the visualization.
+    Read the CSV file from the measure_semantic_shift.py and wrap it into a nice formatted dataframe for the visualization.
     """
-    # TODO rm
+
     fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
 
-
-    #columns = ['Word', 'Score']
-    df = pd.read_csv(res_file)  #, names=columns
+    df = pd.read_csv(res_file)
     nb_words = df['word'].size
     
     # Find the time slice and change it into a single year that match our predefined axis
@@ -41,11 +39,17 @@ def read_results_one_period(res_file):
     return df 
 
 def results_all_periods(folder_path):
+    """
+    :str: folder_path : folder with all the csv files dumped by measure_semantic_shift.py
+
+    Collect all the dataframes from all time slices and create the final huge dataframe to feed to the visualization. 
+    """
+
     list_files = glob.glob(folder_path + "*.csv")
-    df1 = pd.read_csv('/home/mathilde/Documents/S9 Project/sandbox/src/ex_res_shift.csv')
-    df2 = pd.read_csv('/home/mathilde/Documents/S9 Project/sandbox/src/ex_res_shift.csv')
-    full_results = [df1, df2]
-    for f in list_files:
+    #df1 = pd.read_csv('/home/mathilde/Documents/S9 Project/sandbox/src/ex_res_shift.csv') # TODO rm, juste pour les examples
+    #df2 = pd.read_csv('/home/mathilde/Documents/S9 Project/sandbox/src/ex_res_shift.csv') # TODO rm, juste pour les examples
+    full_results = []  #[df1, df2]  # TODO rm
+    for f in list_files: 
         df = read_results_one_period(f)
         full_results.append(df)
     

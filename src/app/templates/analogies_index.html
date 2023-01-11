@@ -1,12 +1,18 @@
 {% from 'bootstrap/form.html' import render_field %}
+{% extends 'base.html' %}
 
 {% block content %}
+
+<!-- TODO Add blablabla about the available data and how to make a request -->
+
+<div class="py-5 text-center">
+    <h2>Find analogies through time periods</h2>
+    <p class="lead px-5">
+      Meaning of words evolves constantly in one language. Our tool can help you visualize the semantic shift of the word of your choice. We currently support English and German, with a set of more than 10,000 words in each language. More languages are coming soon!</p>
+</div>
+
 <div class="container">
     <main>
-      <div class="py-5"> 
-        <h2>Find analogies through time periods</h2>
-      </div>
-  
       <div class="row g-5">
         <div class="col-md-7 col-lg-8">
           <form class="needs-validation" method="POST" novalidate> 
@@ -27,4 +33,5 @@
       </div>
     </main>
 </div>
+
 {% endblock %}

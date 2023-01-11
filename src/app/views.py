@@ -25,43 +25,33 @@ csrf = CSRFProtect(app)
 @app.route('/index/', methods=["GET", "POST"])
 def index():
     form = Analogy()
+    word = form.input.data
+
     if form.validate_on_submit():
-        return redirect(url_for('analogy'))
+        return redirect(url_for('analogy', word=word))
     return render_template('index.html', form=form)
 
-@app.route('/index/tool/', methods=["GET", "POST"])
+@app.route('/analogies/', methods=["GET", "POST"])
 def tool():
     form = Analogy()
+    word = form.input.data
     if form.validate_on_submit():
-        return redirect(url_for('analogy'))  # TODO
-    return render_template('tool.html', form=form)
+        return redirect(url_for('analogy', word=word))  # TODO handle a list of words 
+    return render_template('analogies_index.html', form=form)
 
-@app.route('/analogy/', methods=["GET", "POST"])
-def analogy():
-    # TODO
-    #form = Analogy()
-    #if form.validate_on_submit():
-        #return redirect(url_for('analogy'))
-
-    #d = {"Word": ["gay", "saaa", "nini", "ibio", "hoih io", "fifioz", "ifofioezhoi", "bfi"], "Year": [1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020], "Score": [18, 90, 1920, 40,60,80,20,20]}
-    #print(len(d['Word']), len(d['Year']), len(d["Year"])) # Print all of them out here
-    #df = pd.DataFrame(d)   
-    
-    plot = Clusters_Visualization().plot
-    plot2 = Clusters_Visualization2().plot
-
-    #plot = figure(title="Résultats",x_axis_label="Date", x_axis_type='datetime', y_axis_label="Note", toolbar_location="above",
-    #       plot_width=1200, plot_height=500, sizing_mode="stretch_width", tooltips = TOOLTIPS)
-    #plot.line(x,y, line_width= 2)
-    #plot.add_tools(HoverTool(tooltips=None, renderers=[cr], mode='hline'))
+@app.route('/analogy/<word>/results', methods=["GET", "POST"])
+def analogy(word):    
+    visu = Clusters_Visualization()
+    plot = visu.plot
+    #plot2 = Clusters_Visualization2().plot
 
     script, div = components(plot)
-    script2, div2 = components(plot2)
+    #script2, div2 = components(plot2)
     return render_template('analogy.html',         
         script= script,
-        div = div,
-        script2 = script2,
-        div2 = div2)  
+        div = div)
+        #script2 = script2,
+        #div2 = div2)  
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
@@ -75,5 +65,5 @@ def data():
 def contact():
     form = Contact()
     if form.validate_on_submit():
-        return redirect(url_for('contact'))  # TODO indicate to the user that she/he succeded 
+        return redirect(url_for('contact')) 
     return render_template('contact.html', form=form)
