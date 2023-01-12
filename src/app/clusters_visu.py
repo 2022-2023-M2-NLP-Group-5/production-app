@@ -3,11 +3,8 @@ from bokeh.embed import components
 from bokeh.models import (Arrow, ColumnDataSource, Label,
                           NormalHead, SingleIntervalTicker, TapTool)
 from .visu_utils import results_all_periods
-
 import os
 
-#fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
-#line_color = { "gold": "#c8a850", "silver": "#b0b0b1", "bronze": "#98715d" }
 
 class Clusters_Visualization():
 
@@ -16,7 +13,7 @@ class Clusters_Visualization():
     #    self.target_word = target_word
 
     path = os.getcwd()
-    data = results_all_periods(path + "/")
+    data = results_all_periods(path + "/", tg_word="dog")  # TODO fetch the tg_word from views 
     source = ColumnDataSource(data) 
 
     # TODO change the caption of the third div
@@ -30,16 +27,18 @@ class Clusters_Visualization():
     <div style="font-size: 11px; color: #666;">@{Score}{0.00} semantic shift</div>
     """
 
+    TOOLS = "hover,pan,wheel_zoom,box_zoom,reset,save"
+
     plot = figure(width=1000, height=600,   #x_range=(sprint.MetersBack.max()+2, 0),
-                toolbar_location=None, outline_line_color=None,
+                toolbar_location='right', outline_line_color=None,
                 y_axis_location="left", tooltips=tooltips)
     plot.y_range.range_padding = 4
     plot.y_range.range_padding_units = "absolute"
 
-    plot.title.text = "Semantic shift of the word "  #+ self.target_word   # TODO make it dynamic
+    plot.title.text = "Semantic shift of the word dog"  #+ self.target_word   # TODO make it dynamic
     plot.title.text_font_size = "19px"
 
-    plot.yaxis.ticker = SingleIntervalTicker(interval=50, num_minor_ticks=0)
+    plot.yaxis.ticker = SingleIntervalTicker(interval=10, num_minor_ticks=0)
     #plot.yaxis.axis_line_color = None
     plot.yaxis.major_tick_line_color = None
     plot.ygrid.grid_line_dash = "dashed"
@@ -51,10 +50,10 @@ class Clusters_Visualization():
     plot.xgrid.grid_line_color = None
     plot.xaxis.axis_label = "Year"
 
-    medal = plot.circle(x="Year", y="Score", size=10, level="overlay", 
+    medal = plot.circle(x="Year", y="Score", size='Size', level="overlay",  # size = 10
                         fill_color="Color", line_color="Color", fill_alpha=0.5, source=source)
     plot.hover.renderers = [medal]
 
-    plot.text(x="Year", y="Score", x_offset=10, y_offset=-5,  
+    plot.text(x="Year", y="Score", x_offset=15, y_offset=-5,  
             text="word", text_align="left", text_baseline="middle",
-            text_font_size="12px", source=source)
+            text_font_size="12px", text_color='TextColor', source=source)

@@ -7,7 +7,6 @@ from bokeh.plotting import figure
 from bokeh.embed import components
 import pandas as pd
 from .clusters_visu import Clusters_Visualization
-from .test_visu import Clusters_Visualization2
 
 
 app = Flask(__name__)
@@ -43,15 +42,12 @@ def tool():
 def analogy(word):    
     visu = Clusters_Visualization()
     plot = visu.plot
-    #plot2 = Clusters_Visualization2().plot
 
     script, div = components(plot)
-    #script2, div2 = components(plot2)
+
     return render_template('analogy.html',         
         script= script,
         div = div)
-        #script2 = script2,
-        #div2 = div2)  
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
