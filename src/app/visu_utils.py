@@ -31,6 +31,7 @@ def read_results_one_period(res_file, tg_word):
     #year = map_time_slice(time_slice)
     
     # Rename the column name of the metric we want to display on the graph for easier use
+    # TODO dump the columns that are useless 
     df.rename(columns={f'MEANING GAIN/LOSS {time_slice}':'Score'}, inplace=True)
     df['Year'] = None
     df['Color'] = fill_color['gold']

@@ -13,7 +13,7 @@ class Clusters_Visualization():
     #    self.target_word = target_word
 
     path = os.getcwd()
-    data = results_all_periods(path + "/", tg_word="dog")  # TODO fetch the tg_word from views 
+    data = results_all_periods(path + "/", tg_word="awful")  # TODO fetch the tg_word from views 
     source = ColumnDataSource(data) 
 
     # TODO change the caption of the third div
@@ -35,7 +35,7 @@ class Clusters_Visualization():
     plot.y_range.range_padding = 4
     plot.y_range.range_padding_units = "absolute"
 
-    plot.title.text = "Semantic shift of the word dog"  #+ self.target_word   # TODO make it dynamic
+    plot.title.text = "Semantic shift of the word awful"  #+ self.target_word   # TODO make it dynamic
     plot.title.text_font_size = "19px"
 
     plot.yaxis.ticker = SingleIntervalTicker(interval=10, num_minor_ticks=0)
