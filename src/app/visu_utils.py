@@ -44,10 +44,11 @@ def results_all_periods(folder_path):
 
     Collect all the dataframes from all time slices and create the final huge dataframe to feed to the visualization. 
     """
-
+    print("Retrieving files from ", folder_path)
     list_files = glob.glob(folder_path + "*.csv")
     #df1 = pd.read_csv('/home/mathilde/Documents/S9 Project/sandbox/src/ex_res_shift.csv') # TODO rm, juste pour les examples
     #df2 = pd.read_csv('/home/mathilde/Documents/S9 Project/sandbox/src/ex_res_shift.csv') # TODO rm, juste pour les examples
+    [print(f) for f in list_files]
     full_results = []  #[df1, df2]  # TODO rm
     for f in list_files: 
         df = read_results_one_period(f)

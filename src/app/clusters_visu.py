@@ -4,6 +4,7 @@ from bokeh.models import (Arrow, ColumnDataSource, Label,
                           NormalHead, SingleIntervalTicker, TapTool)
 from .visu_utils import results_all_periods
 
+import os
 
 #fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
 #line_color = { "gold": "#c8a850", "silver": "#b0b0b1", "bronze": "#98715d" }
@@ -14,8 +15,8 @@ class Clusters_Visualization():
     #def __init__(self, target_word):
     #    self.target_word = target_word
 
-    
-    data = results_all_periods("/home/mathilde/Documents/S9 Project/sandbox/src/")  #TODO change path
+    path = os.getcwd()
+    data = results_all_periods(path + "/")
     source = ColumnDataSource(data) 
 
     # TODO change the caption of the third div
