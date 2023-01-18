@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap
 from flask_wtf import CSRFProtect
 from .contact import Contact
@@ -7,6 +7,7 @@ from bokeh.plotting import figure
 from bokeh.embed import components
 import pandas as pd
 from .clusters_visu import Clusters_Visualization
+from .tree_visu import TreeVisu
 
 
 app = Flask(__name__)
@@ -39,15 +40,29 @@ def tool():
     return render_template('analogies_index.html', form=form)
 
 @app.route('/analogy/<word>/results', methods=["GET", "POST"])
-def analogy(word):    
-    visu = Clusters_Visualization()
-    plot = visu.plot
+def analogy(word):
+    # For the tree visualization
+    visu_tree = TreeVisu()
+    plot_tree = visu_tree.plot
+    script_tree, div_tree = components(plot_tree)
 
-    script, div = components(plot)
+    # For the cluster visualization    
+    visu_cluster = Clusters_Visualization()
+    plot_cluster = visu_cluster.plot
 
-    return render_template('analogy.html',         
+    script, div = components(plot_cluster)
+
+    # Fetch the visualization mode 
+    visu_mode = request.args.get('visu_mode', "tree", type=str)
+    print("Visu mode", visu_mode)
+
+    return render_template('analogy.html', 
+        script_tree = script_tree,
+        div_tree = div_tree,        
         script= script,
-        div = div)
+        div = div,
+        word=word, 
+        visu_mode=visu_mode)
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():

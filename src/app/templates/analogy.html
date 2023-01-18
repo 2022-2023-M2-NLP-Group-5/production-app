@@ -2,20 +2,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="py-5 text-center">
 
-        {{ div|safe }}
-    
-        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
-        crossorigin="anonymous"></script>
+    <ul class="px-3 nav nav-tabs">
+        <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{ url_for('analogy', word=word, visu_mode='tree') }}">Tree View</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('analogy', word=word, visu_mode='cluters') }}">Cluster View</a>
+        </li>
+    </ul>
 
-        {{ script|safe }}
 
-    </div>
+    {% if visu_mode == 'cluters' %}
+        <div class="py-5 text-center">
+            <div class="py-2">
+                <h4>
+                    Semantic shift of the word {{ word }}
+                </h4>
+            </div>
+
+            {{ div|safe }}
+        
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+            crossorigin="anonymous"></script>
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+            crossorigin="anonymous"></script>
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+            crossorigin="anonymous"></script>
+
+            {{ script|safe }}
+
+        </div>
+    {% elif visu_mode == 'tree' %} 
+        <div class="py-5 text-center">
+
+            <div class="py-2"> <!-- TODO ajuster -->
+                <h4>
+                    Semantic shift of the word {{ word }}
+                </h4>
+            </div>
+
+            {{ div_tree|safe }}
+        
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+            crossorigin="anonymous"></script>
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+            crossorigin="anonymous"></script>
+            <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+            crossorigin="anonymous"></script>
+
+            {{ script_tree|safe }}
+
+        </div>
+    {% endif %}
 
     <div class="my-4 shadow-sm">
         {# { render_table(data) } #}
