@@ -19,15 +19,21 @@ class TreeVisu():
 
     nx.set_edge_attributes(G, edge_attrs, "edge_color")
 
-    plot = figure(width=400, height=400, x_range=(-1.2, 1.2), y_range=(-1.2, 1.2),
+    plot = figure(width=600, height=600, x_range=(-2, 2), #y_range=(1880, 2020), TODO adjust the values of the nodes 
                 x_axis_location="below", y_axis_location="left", toolbar_location="right",
-                title="Graph Interaction Demo", tooltips="index: @index, club: @club") #background_fill_color="#efefef",
+                title="Tree View", tooltips="Word: @word, Shift score: @score") #background_fill_color="#efefef",
     plot.grid.grid_line_color = None
 
     graph_renderer = from_networkx(G, nx.spring_layout, scale=1, center=(0, 0))
-    graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="lightblue")
+    graph_renderer.node_renderer.glyph = Circle(size=15, fill_color="mediumaquamarine")
     graph_renderer.edge_renderer.glyph = MultiLine(line_color="edge_color",
                                                 line_alpha=0.8, line_width=1.5)
     plot.renderers.append(graph_renderer)
+
+    plot.yaxis.ticker = [1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020] # TODO adapt it to the time slices 
+    plot.yaxis.major_tick_in = -5
+    plot.yaxis.major_tick_out = 10
+    plot.ygrid.grid_line_color = None
+    plot.yaxis.axis_label = "Year"
 
     #show(plot)

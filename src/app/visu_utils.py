@@ -37,11 +37,14 @@ def read_results_one_period(res_file, tg_word):
     df['Color'] = fill_color['gold']
     df['Size'] = 10
     df['TextColor'] = color_text['black']
+    # TODO change the None after the tests 
+    df["Parent"] = None
 
     # Special treatment for the target word
     start, end = time_slice.split("-")
     mean_year = str(round((int(start)+int(end))/2))
-    df.loc[nb_words] = [tg_word, None, None, None, None, None, None, None, None, None, None, None, None, None, 0, None, mean_year, fill_color['silver'], 20, color_text['red']]
+    # TODO correct with the new column 
+    df.loc[nb_words] = [tg_word, None, None, None, None, None, None, None, None, None, None, None, None, None, 0, None, None, mean_year, fill_color['silver'], 20, color_text['red']]
     
 
     for i in range(nb_words):
@@ -68,3 +71,21 @@ def results_all_periods(folder_path, tg_word):
     df_full = pd.concat(full_results)
 
     return df_full
+
+
+
+
+# TODO reder_table only accept elements with __table__ attribute
+"""
+def fetch_coha_words():
+    list_words = []
+    data_en = pd.read_csv("./words_data/coha_sample.csv")
+    for elem in data_en.word.values:
+        print(elem)
+        word = dict()
+        word['word'] = elem
+        list_words.append(word)
+    #words['words'] = data_en.word.values.tolist()
+
+    return list_words
+"""

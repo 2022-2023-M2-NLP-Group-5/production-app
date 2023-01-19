@@ -1,3 +1,4 @@
+{% from 'bootstrap/table.html' import render_table %}
 {% extends 'base.html' %}
 
 {% block content %}
@@ -23,7 +24,13 @@
                     Words available
                     <h5>
                         You can find a list of words available to query below:
-                        TODO 
+                        <div class="my-4 shadow-sm">
+                            {# { render_table(data_en) } #}
+                            {% for table in tables %}
+                                <!--<h5>{{titles[loop.index]}}</h5>--> 
+                                {{ table|safe }}
+                            {% endfor %}
+                        </div> 
                     </h5>
                 </h4>
             </h3>

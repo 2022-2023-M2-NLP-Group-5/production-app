@@ -70,7 +70,12 @@ def methodo():
 
 @app.route('/data/', methods=["GET", "POST"])
 def data():
-    return render_template('data.html')
+    # TODO do a prettier thing
+    data_en = pd.read_csv("./words_data/coha_sample.csv")
+    words = data_en 
+    
+    return render_template('data.html',tables=[words.to_html(classes='word')],
+        titles = ['na', 'Word'])
 
 @app.route('/contact/', methods=["GET", "POST"])
 def contact():
