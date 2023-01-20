@@ -1,7 +1,7 @@
 from bokeh.plotting import figure, show
 from bokeh.embed import components
 from bokeh.models import (Arrow, ColumnDataSource, Label,
-                          NormalHead, SingleIntervalTicker, TapTool, Tooltip)
+                          NormalHead, SingleIntervalTicker, TapTool, Tooltip, BoxAnnotation)
 from .visu_utils import results_all_periods  #, set_historical_envents
 import os
 import pandas as pd
@@ -14,7 +14,7 @@ class Clusters_Visualization():
     #    self.target_word = target_word
 
     path = os.getcwd()
-    data = results_all_periods(path + "/", tg_word="awful")  # TODO fetch the tg_word from views + TODO make a folder for the csv outputs
+    data = results_all_periods(path + "/model_outputs/", tg_word="awful")  # TODO fetch the tg_word from views, before: model_outputs/
     source = ColumnDataSource(data) 
 
     # TODO change the caption of the third div
@@ -23,9 +23,9 @@ class Clusters_Visualization():
         <span style="font-size: 15px;">@word</span>&nbsp;
     </div>
     <div>
-        <span style="font-size: 17px; font-weight: bold;">@Score{0.00}</span>&nbsp;
+        <span style="font-size: 17px; font-weight: bold;">@Score{0.00}%</span>&nbsp;
     </div>
-    <div style="font-size: 11px; color: #666;">@{Score}{0.00} semantic shift</div>
+    <div style="font-size: 11px; color: #666;">semantic shift rate</div>
     """
 
     TOOLS = "hover,pan,wheel_zoom,box_zoom,reset,save"
@@ -45,24 +45,20 @@ class Clusters_Visualization():
     plot.ygrid.grid_line_dash = "dashed"
     plot.yaxis.axis_label = "Score"
 
-    plot.xaxis.ticker = [1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020] # TODO adapt it to the time slices 
+    plot.xaxis.ticker = [1800, 1820, 1840, 1860, 1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020] #[1880, 1900, 1920, 1940, 1960, 1980, 2000, 2020] # TODO adapt it to the time slices 
     plot.xaxis.major_tick_in = -5
     plot.xaxis.major_tick_out = 10
     plot.xgrid.grid_line_color = None
     plot.xaxis.axis_label = "Year"
 
-    # TODO fix the pb when we slide to ticks that are not in the previous list 
-    plot.xgrid.band_hatch_pattern = "/"
-    plot.xgrid.band_hatch_alpha = 0.6
-    plot.xgrid.band_hatch_color = "lightgrey"
-    plot.xgrid.band_hatch_weight = 0.5
-    plot.xgrid.band_hatch_scale = 10
+    time_slice1 = BoxAnnotation(left=1810, right=1860, fill_color='#009E73', fill_alpha=0.1)
+    plot.add_layout(time_slice1)
+    time_slice2 = BoxAnnotation(left=1960, right=2010, fill_color='#009E73', fill_alpha=0.1)
+    plot.add_layout(time_slice2)
 
     # TODO test for the axis of historical events
 
-    #hist_events = set_historical_envents()
-    df_hist = pd.read_csv("./historical_events_data/historical_events.csv")  # TODO en dur mais tant pis
-
+    df_hist = pd.read_csv("./historical_events_data/historical_events.csv")  # TODO add events around 1800
 
     for event in df_hist.values:
         historical_event_label = Label(x=event[1], y=event[2], text=event[0],

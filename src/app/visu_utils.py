@@ -11,7 +11,13 @@ def map_time_slice(time_range):
     #mean_year = str(round((int(start)+int(end))/2))
     year = str(random.randint(int(start), int(end)))
     return year #mean_year
-    
+
+def normalize_scores(df):
+    idx = 0
+    for i in df['Score'].values:
+        df['Score'][idx] = float(i*100)
+        idx+=1
+    return df
 
 def read_results_one_period(res_file, tg_word):
     """
@@ -23,7 +29,7 @@ def read_results_one_period(res_file, tg_word):
     fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
     color_text = { "black": "#000000", "red": "#cc0000"}
 
-    df = pd.read_csv(res_file)
+    df = pd.read_csv(res_file, sep=",", encoding='utf-8')  # TODO check that it doesnt switch to ; instead of , when generated files
     nb_words = df['word'].size
     
     # Find the time slice and change it into a single year that match our predefined axis
@@ -32,7 +38,9 @@ def read_results_one_period(res_file, tg_word):
     
     # Rename the column name of the metric we want to display on the graph for easier use
     # TODO dump the columns that are useless 
-    df.rename(columns={f'MEANING GAIN/LOSS {time_slice}':'Score'}, inplace=True)
+    df.rename(columns={f'AP {time_slice}':'Score'}, inplace=True)  # TODO select the right column 
+    # *10 for the values in the score column
+    df = normalize_scores(df)
     df['Year'] = None
     df['Color'] = fill_color['gold']
     df['Size'] = 10
@@ -44,7 +52,7 @@ def read_results_one_period(res_file, tg_word):
     start, end = time_slice.split("-")
     mean_year = str(round((int(start)+int(end))/2))
     # TODO correct with the new column 
-    df.loc[nb_words] = [tg_word, None, None, None, None, None, None, None, None, None, None, None, None, None, 0, None, None, mean_year, fill_color['silver'], 20, color_text['red']]
+    df.loc[nb_words] = [tg_word, 0.0, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, mean_year, fill_color['silver'], 20, color_text['red']]
     
 
     for i in range(nb_words):

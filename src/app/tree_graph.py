@@ -8,25 +8,40 @@ import gzip
 import pandas as pd
 import re
 import glob
+from .visu_utils import normalize_scores
 
 # TODO big refacto to clean the code (should look like a real python class)
+
 
 
 class TreeGraph():
 
     g = nx.Graph()
 
-    list_files = glob.glob("./" + "*.csv")  # TODO make a folder with all the output files 
+    list_files = glob.glob("./model_outputs/" + "*.csv")
     [print(f) for f in list_files]
     
     for f in list_files: 
-        df = pd.read_csv(f)
+        df = pd.read_csv(f, sep=",", encoding='utf-8')  # TODO check that it doesnt switch to ; instead of , when generated files
+        df.rename(columns={f'AP All':'Score'}, inplace=True)  # TODO change to the right column 
+        print(df['Score'].array)
+        df = normalize_scores(df)  # TODO not sure it's really useful in this case 
+
+        # To retrieve the time slice  TODO idk how to include this scale into the rendering 
+        time_slice = re.findall("\d+-\d+",df.columns[1])[0] 
+        start, end = time_slice.split("-")
+        mean_year = str(round((int(start)+int(end))/2))
+        df['Year'] = mean_year
+        print(df["Year"].values)
+
         idx = 0
         for i in df['Parent'].values:
             word1, word2 = re.split(",", i)
             tup = (word1, word2)
             src_word = df["word"][idx]
-            score = df["AP All"][idx]  # TODO change to the right value 
+            print(src_word)
+            score = df["Score"][idx] 
+            print("SCORE", score) 
             
             # add the src word into the graph 
             g.add_node(src_word)
@@ -48,12 +63,9 @@ class TreeGraph():
             g._node[v]['score'] = score  # TODO that can work since we're going to indice the vertices ? 
 
         """
-        
-        #relationships.append(tup)
-        #print(i)
 
     #nx.draw(g, with_labels = True)
-    #plt.savefig("./filename23.png")
+    #plt.savefig("./filename3.png")
 
 
 
