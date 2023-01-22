@@ -72,9 +72,13 @@ def methodo():
 def data():
     # TODO do a prettier thing
     data_en = pd.read_csv("./words_data/coha_sample.csv")
-    words = data_en 
+    data_de = pd.read_csv("./words_data/semeval_words_de.csv")
+
+    words_en = data_en 
+    words_de = data_de 
     
-    return render_template('data.html',tables=[words.to_html(classes='word')],
+    return render_template('data.html',tables_en=[words_en.to_html(classes='word')],
+        tables_de=[words_de.to_html(classes='word')],
         titles = ['na', 'Word'])
 
 @app.route('/contact/', methods=["GET", "POST"])

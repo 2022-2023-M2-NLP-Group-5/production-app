@@ -26,8 +26,8 @@
                         You can find a list of words available to query below:
                         <div class="my-4">
                             {# { render_table(data_en) } #}
-                            {% for table in tables %}
-                                <!--<h5>{{titles[loop.index]}}</h5>--> 
+                            {% for table in tables_en %}
+                                <!--<h5>{{titles[loop.index]}}</h5>-->
                                 {{ table|safe }}
                             {% endfor %}
                         </div> 
@@ -50,7 +50,9 @@
                     Words available
                     <h5>
                         You can find a list of words available to query below:
-                        TODO 
+                        {% for table in tables_de %}
+                            {{ table|safe }}
+                        {% endfor %}
                     </h5>
                 </h4>
             </h3>
