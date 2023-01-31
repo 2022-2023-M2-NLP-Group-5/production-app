@@ -18,6 +18,8 @@ Lexical semantic change is a topic that attracts interest from a wide range of a
 
 ## Install and usage instructions
 
+To build the webapp locally follow these instructions. 
+
 First install dependencies with:
 ```bash
   pip3 install -r requirement.txt
