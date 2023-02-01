@@ -13,6 +13,7 @@ from .visu_utils import results_all_periods
 import os
 
 
+
 app = Flask(__name__)
 
 app.config.from_object('config')
@@ -58,7 +59,6 @@ def analogy(word, lang):
     visu_cluster = Clusters_Visualization(word, lang, data_csv)
     plot_cluster = visu_cluster.plot()
 
-
     script, div = components(plot_cluster)
 
     # Fetch the visualization mode 
@@ -74,6 +74,7 @@ def analogy(word, lang):
         data=data, 
         lang = lang)
 
+
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
     return render_template('methodology.html')
@@ -85,7 +86,6 @@ def data():
 
     words_en = data_en 
     words_de = data_de 
-
     
     return render_template('data.html',tables_en=[words_en.to_html(classes='word')],
         tables_de=[words_de.to_html(classes='word')],

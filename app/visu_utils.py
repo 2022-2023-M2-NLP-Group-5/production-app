@@ -15,7 +15,7 @@ def parse_time_slice(string):
         return '1800-1899'  
     elif idx_slice == "c2_de":
         return '1946-1990'  
-
+        
 
 def map_time_slice(time_range):
     """
@@ -46,23 +46,20 @@ def read_results_one_period(res_file):
 
     fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
     color_text = { "black": "#000000", "red": "#cc0000"}
-
+    
     df = pd.read_csv(res_file, sep=",", encoding='utf-8')  
     df = df.drop_duplicates(ignore_index=True)
     nb_words = df['word'].size
     tg_word = df["word"][0]
     
-    
     df['Year'] = None
     df['Color'] = fill_color['gold']
     df['Size'] = 10
     df['TextColor'] = color_text['black']
-    
     df["Parent"] = None
     df["Synonyms"] = None
     df["Score"] = None
 
- 
     all_neighbors = []
     all_distances = []
     all_years = []
@@ -111,6 +108,7 @@ def results_all_periods(folder_path, tg_word, lang):
     print("Retrieving files from ", folder_path)
     list_files = glob.glob(folder_path + "*.csv")
     [print(f) for f in list_files]
+
     regexp = re.compile("([a-zA-Z]+)")
     if lang == "English":
         lang = "en"
@@ -130,4 +128,3 @@ def results_all_periods(folder_path, tg_word, lang):
     df_full = pd.concat(full_results)
 
     return df_full
-

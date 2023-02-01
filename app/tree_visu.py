@@ -6,6 +6,7 @@ from .tree_graph import TreeGraph
 # TODO big refacto to clean the code (should look like a real python class)
 
 class TreeVisu():
+
     G = TreeGraph().g 
 
     SAME_CLUB_COLOR, DIFFERENT_CLUB_COLOR = "darkgrey", "red"
@@ -16,6 +17,7 @@ class TreeVisu():
         edge_attrs[(start_node, end_node)] = edge_color
 
     nx.set_edge_attributes(G, edge_attrs, "darkgray") 
+
 
     plot = figure(width=600, height=600,
                 x_axis_location="below", y_axis_location="left", toolbar_location="right",

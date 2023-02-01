@@ -1,5 +1,6 @@
 from bokeh.plotting import figure, show
 from bokeh.embed import components
+
 from bokeh.models import (ColumnDataSource, Label,
                           SingleIntervalTicker, BoxAnnotation)
 from .visu_utils import results_all_periods
@@ -76,3 +77,4 @@ class Clusters_Visualization():
                 text_font_size="12px", text_color='TextColor', source=source)
         
         return plot
+        
