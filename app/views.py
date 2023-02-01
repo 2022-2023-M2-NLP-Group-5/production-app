@@ -7,7 +7,11 @@ from bokeh.plotting import figure
 from bokeh.embed import components
 import pandas as pd
 from .clusters_visu import Clusters_Visualization
-from .tree_visu import TreeVisu
+#from .tree_visu import TreeVisu
+from .table_visu import table_visu, table_display
+from .visu_utils import results_all_periods
+import os
+
 
 
 app = Flask(__name__)
@@ -26,29 +30,34 @@ csrf = CSRFProtect(app)
 def index():
     form = Analogy()
     word = form.input.data
+    language = form.language.data
 
     if form.validate_on_submit():
-        return redirect(url_for('analogy', word=word))
+        return redirect(url_for('analogy', word=word, lang=language))
     return render_template('index.html', form=form)
 
 @app.route('/analogies/', methods=["GET", "POST"])
 def tool():
     form = Analogy()
     word = form.input.data
-    if form.validate_on_submit():
-        return redirect(url_for('analogy', word=word))  # TODO handle a list of words 
-    return render_template('analogies_index.html', form=form)
+    language = form.language.data
+    headings, data = table_display()
 
-@app.route('/analogy/<word>/results', methods=["GET", "POST"])
-def analogy(word):
-    # For the tree visualization
-    visu_tree = TreeVisu()
-    plot_tree = visu_tree.plot
-    script_tree, div_tree = components(plot_tree)
+    if form.validate_on_submit():
+        return redirect(url_for('analogy', word=word, lang=language))
+    return render_template('analogies_index.html', form=form, data=data, headings=headings)
+
+@app.route('/analogy/<word>/<lang>/results', methods=["GET", "POST"])
+def analogy(word, lang):
+    # For the table of results 
+    headings, data = table_visu(word)
+
+    path = os.getcwd()
+    data_csv = results_all_periods(path + "/model_outputs/", word, lang)
 
     # For the cluster visualization    
-    visu_cluster = Clusters_Visualization()
-    plot_cluster = visu_cluster.plot
+    visu_cluster = Clusters_Visualization(word, lang, data_csv)
+    plot_cluster = visu_cluster.plot()
 
     script, div = components(plot_cluster)
 
@@ -56,13 +65,15 @@ def analogy(word):
     visu_mode = request.args.get('visu_mode', "tree", type=str)
     print("Visu mode", visu_mode)
 
-    return render_template('analogy.html', 
-        script_tree = script_tree,
-        div_tree = div_tree,        
+    return render_template('analogy.html',        
         script= script,
         div = div,
         word=word, 
-        visu_mode=visu_mode)
+        visu_mode=visu_mode, 
+        headings=headings,
+        data=data, 
+        lang = lang)
+
 
 @app.route('/methodology/', methods=["GET", "POST"])
 def methodo():
@@ -70,9 +81,8 @@ def methodo():
 
 @app.route('/data/', methods=["GET", "POST"])
 def data():
-    # TODO do a prettier thing
-    data_en = pd.read_csv("./words_data/coha_sample.csv")
-    data_de = pd.read_csv("./words_data/semeval_words_de.csv")
+    data_en = pd.read_csv("./words_data/generated_words_en.csv")
+    data_de = pd.read_csv("./words_data/generated_words_de.csv")
 
     words_en = data_en 
     words_de = data_de 

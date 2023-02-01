@@ -1,52 +1,42 @@
-:warning: NOTE: this is the sandbox (scratch) repo. See other repo for full and proper Readme.
+# OpenSemShift
 
-# Tracing and visualizing diachronic semantic change using contextualized embeddings
+Sources of our web application for our tool [Open SemShift](https://github.com/2022-2023-M2-NLP-Group-5/OpenSemShift).  
 
-## Project formalisation
+Open SemShift is available [here](https://opensemshift.herokuapp.com/).
 
-Working draft project goal proposal:
+Find more about [Open SemShift](https://github.com/2022-2023-M2-NLP-Group-5/OpenSemShift).  
 
-tracing and visualizing diachronic semantic change 
-using contextualized embeddings (from m-BERT),
-with re-training on an array of multilingual time-segmented corpora
+## Authors 
+It was realised by [Aguiar Mathilde](https://github.com/MathildeAguiar), [So Averie Ho Zoen](https://github.com/averieso), [Tankard Scott](https://github.com/tabbyrobin) and [NGO Van Duy](https://github.com/thebugcreator) for the 2022-2023 Software Project (UE905 EC1) at IDMC (Nancy), under the supervision of [Esteban Marquer](https://emarquer.github.io/) and [Miguel Couceiro](https://members.loria.fr/mcouceiro/).
 
-(With 1 model per time segment. Example: Model A: 1910 english + 1910 french.
-Model B: 1920 english + 1920 french.)
+## Abstract
+Lexical semantic change is a topic that attracts interest from a wide range of audiences, ranging from historical linguists to the general public. The OpenSemShift project aims to answer a question like "how does the word *gay* change from meaning *merry* to *homosexual*?" Traditionally, the answers may be answered by etymological accounts or by citing historical events. By temporally adapting pre-trained, contextualised word embeddings with the mBERT model and clustering, we present a tool that can visualise this kind of semantic change over time. We find that our multilingual model achieves comparable performance in semantic change detection compared to previous approaches, and additionally, that multilingually fine-tuned mBERT is beneficial to such a task. We present several case studies via our visualisation component and discuss wider implications for future research.
 
-Tracing: putting in relation of multiple quantified (non-binary) measurements (of semantic change).
+## Content
+- [Install and usage instructions](#install-and-usage-instructions)
+- [Repository structure](#repository-structure)
 
-Underlying core-core part here is: get quantified measurements of semantic change from the model (m-bert).
+## Install and usage instructions
 
-## Extra steps and components we may add
+To build the webapp locally follow these instructions. 
 
-As first step: set-up with just 1 language, for 2 time periods. 
-Later, add additional languages into the corpuses and re-train the models.
+First install dependencies with:
+```bash
+  pip3 install -r requirement.txt
+```
 
-Bonuses:
+Then to access the website in local:
+```bash
+  $ python3 run.py
+```
+Access it at the following [address](http://127.0.0.1:5000/). 
 
-+ Run experiments on multi-senses vs single-averaged sense (WITHOUT testing on different types of semantic change)
-
-+ analyzing multiple languages in comparison to each other (e.g. evolution of Sir/Monsieur in eng/fr)
-
-+ historical event contextualization (database...)
-
-+ future semantic change prediction
-
-Non-goals (explicitly excluded from project scope):
-
-- exploring the multilinguality inside multilingual models
-
-- doing multiple monolingual applications %(in array -- rinse-repeat, each independent from the other)
-
-## Other notes
-
-Full COHA requires purchase ($375 minimum) but it seems a subset can be downloaded free:
-https://www.corpusdata.org/formats.asps
-
-Plaintext sample is here (9 mb zip, 25 mb extracted):
-https://www.corpusdata.org/coha/samples/text.zip
-
-Underlying core-core part here is: get quantified measurements of semantic change from the model (m-bert).
-For which we need:
-- Multiple Bert models (diachronically segmented)
-- code to extract measurements from them
+## Repository structure
+- [`README.md`](/README-example.md): this file.
+- [`run.py`](/run.py): To launch the Flask server and access to the website.
+- [`historical_events_data/`](/historical_events_data/): List of the historical events used for our visualizations.
+- [`model_outputs/`](/model_outputs/): Raw CSV outputs from our models.
+- [`words_data/`](/words_data/): folder for the words available to query.
+- [`app/`](/app/): folder containing all the main source code for the webapp.
+    - [`results/templates/`](/results/templates/): folder containing the templates (HTML files).
+    - [`results/static/`](/results/static/): folder containing the images/static files.

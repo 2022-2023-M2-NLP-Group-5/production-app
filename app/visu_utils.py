@@ -3,23 +3,41 @@ import glob
 import re
 import random
 
+
+def parse_time_slice(string):
+    regexp = re.compile("c1_en|c2_en|c1_de|c2_de")
+    idx_slice = re.findall(regexp, string)[0]
+    if idx_slice == "c1_en":
+        return '1810-1860'
+    elif idx_slice == "c2_en":
+        return '1960-2010'
+    elif idx_slice == "c1_de":
+        return '1800-1899'  
+    elif idx_slice == "c2_de":
+        return '1946-1990'  
+        
+
 def map_time_slice(time_range):
     """
     Get the time slice used to compute the score and return the mean year to choose the position of the cloud on the graph.
     """
     start, end = time_range.split("-")
-    #mean_year = str(round((int(start)+int(end))/2))
     year = str(random.randint(int(start), int(end)))
-    return year #mean_year
+    return year 
 
-def normalize_scores(df):
+
+def normalize_scores(value):
+    """
     idx = 0
     for i in df['Score'].values:
         df['Score'][idx] = float(i*100)
         idx+=1
-    return df
+    """
+    value = float(float(value)*100)
+    return value
 
-def read_results_one_period(res_file, tg_word):
+
+def read_results_one_period(res_file):
     """
     :str: res_file : CSV output of measure_semantic_shift.py
 
@@ -28,41 +46,60 @@ def read_results_one_period(res_file, tg_word):
 
     fill_color = { "gold": "#efcf6d", "silver": "#cccccc", "bronze": "#c59e8a" }
     color_text = { "black": "#000000", "red": "#cc0000"}
-
-    df = pd.read_csv(res_file, sep=",", encoding='utf-8')  # TODO check that it doesnt switch to ; instead of , when generated files
+    
+    df = pd.read_csv(res_file, sep=",", encoding='utf-8')  
+    df = df.drop_duplicates(ignore_index=True)
     nb_words = df['word'].size
+    tg_word = df["word"][0]
     
-    # Find the time slice and change it into a single year that match our predefined axis
-    time_slice = re.findall("\d+-\d+",df.columns[1])[0]  #'1910-1950'
-    #year = map_time_slice(time_slice)
-    
-    # Rename the column name of the metric we want to display on the graph for easier use
-    # TODO dump the columns that are useless 
-    df.rename(columns={f'AP {time_slice}':'Score'}, inplace=True)  # TODO select the right column 
-    # *10 for the values in the score column
-    df = normalize_scores(df)
     df['Year'] = None
     df['Color'] = fill_color['gold']
     df['Size'] = 10
     df['TextColor'] = color_text['black']
-    # TODO change the None after the tests 
     df["Parent"] = None
+    df["Synonyms"] = None
+    df["Score"] = None
 
-    # Special treatment for the target word
-    start, end = time_slice.split("-")
-    mean_year = str(round((int(start)+int(end))/2))
-    # TODO correct with the new column 
-    df.loc[nb_words] = [tg_word, 0.0, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, mean_year, fill_color['silver'], 20, color_text['red']]
-    
+    all_neighbors = []
+    all_distances = []
+    all_years = []
 
     for i in range(nb_words):
-        # We need to have a nice cloud, so we need to modulate a bit the year, I choose it randomly within the time range
-        year = map_time_slice(time_slice)
-        df['Year'][i] = year
+        tg_word = df.word[i]
+        time_slice = parse_time_slice(df.slice[i])
+        neighbors = df.cluster[i]
+        neighbors = neighbors.split(";")
+        all_neighbors.append(neighbors)
+        distances = df.distance[i]
+        distances = distances.split(";")
+        for d in range(len(distances)):
+            distances[d] = normalize_scores(distances[d]) 
+        all_distances.append(distances)
 
-    return df 
+        for w in range(len(neighbors)):
+            all_years.append(map_time_slice(time_slice))
+        
+        
+    all_neighbors = sum(all_neighbors, [])
+    all_distances = sum(all_distances, [])
 
-def results_all_periods(folder_path, tg_word):
+    res = {"word":all_neighbors,
+                    "Score":all_distances, "Year": all_years}
+    
+    df1 = pd.DataFrame(data=res)
+    df1['Color'] = fill_color['gold']
+    df1['Size'] = 10
+    df1['TextColor'] = color_text['black']
+
+    
+    df1.loc[df1['word'].size] = [tg_word, 0.0, 1835, fill_color['silver'], 20, color_text['red']]
+    df1.loc[df1['word'].size+1] = [tg_word, 0.0, 1985, fill_color['silver'], 20, color_text['red']]
+
+    return df1 
+
+
+
+def results_all_periods(folder_path, tg_word, lang):
     """
     :str: folder_path : folder with all the csv files dumped by measure_semantic_shift.py
 
@@ -71,29 +108,23 @@ def results_all_periods(folder_path, tg_word):
     print("Retrieving files from ", folder_path)
     list_files = glob.glob(folder_path + "*.csv")
     [print(f) for f in list_files]
+
+    regexp = re.compile("([a-zA-Z]+)")
+    if lang == "English":
+        lang = "en"
+    elif lang == "German":
+        lang = "de"
+    
     full_results = []
     for f in list_files: 
-        df = read_results_one_period(f, tg_word)
-        full_results.append(df)
+        f_trim = f.split("/")
+        f_trim = f_trim[len(f_trim)-1]
+        parsed_lang = re.findall(regexp, f_trim)[2]
+        parsed_word = re.findall(regexp, f_trim)[0]
+        if parsed_lang == lang and parsed_word.lower() == tg_word.lower():
+            df = read_results_one_period(f)
+            full_results.append(df)
     
     df_full = pd.concat(full_results)
 
     return df_full
-
-
-
-
-# TODO reder_table only accept elements with __table__ attribute
-"""
-def fetch_coha_words():
-    list_words = []
-    data_en = pd.read_csv("./words_data/coha_sample.csv")
-    for elem in data_en.word.values:
-        print(elem)
-        word = dict()
-        word['word'] = elem
-        list_words.append(word)
-    #words['words'] = data_en.word.values.tolist()
-
-    return list_words
-"""

@@ -12,8 +12,6 @@ from .visu_utils import normalize_scores
 
 # TODO big refacto to clean the code (should look like a real python class)
 
-
-
 class TreeGraph():
 
     g = nx.Graph()

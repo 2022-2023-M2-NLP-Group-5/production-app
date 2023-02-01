@@ -15,24 +15,20 @@
                     COHA free sample
 
                     <h5>
-                        To train our model we used the free sample available of the <a href="https://www.english-corpora.org/coha/">COHA dataset</a>. 
-                        Our sample is about XX Mb with a set of words from different time periods. We collected data from 1910 to 1950. 
+                        To train our model we used the free sample available of the <a href="https://www.english-corpora.org/coha/">COHA dataset</a> from the SemEval Task 1. 
+                        We collected data from 1910 to 1950. 
                     </h5>
                 </h4>
 
-                <h4 class="py-2">
-                    Words available
                     <h5>
                         You can find a list of words available to query below:
                         <div class="my-4">
                             {# { render_table(data_en) } #}
                             {% for table in tables_en %}
-                                <!--<h5>{{titles[loop.index]}}</h5>-->
                                 {{ table|safe }}
                             {% endfor %}
                         </div> 
                     </h5>
-                </h4>
             </h3>
 
             
@@ -41,8 +37,10 @@
                 <h4 class="py-2">
                     DTA, BZ and ND datasets
                     <h5>
-                        To train our model we used the free <a href="https://www.deutschestextarchiv.de/">DTA dataset</a>, <a href="https://zefys.staatsbibliothek-berlin.de/">BZ dataset</a> and the <a href="https://zefys.staatsbibliothek-berlin.de/">ND dataset</a>. 
-                        Our sample is about XX Mb with a set of words from different time periods. We collected data from 1810 to 1860 (DTA datset) and from 1960 to 2010 (BZ and ND datasets). 
+
+                        To train our model we used the free <a href="https://www.deutschestextarchiv.de/">DTA dataset</a>, <a href="https://zefys.staatsbibliothek-berlin.de/">BZ dataset</a> and the <a href="https://zefys.staatsbibliothek-berlin.de/">ND dataset</a> from the SemEval Task 1. 
+                        We collected data from 1810 to 1860 (DTA datset) and from 1960 to 2010 (BZ and ND datasets). 
+
                     </h5>
                 </h4>
 

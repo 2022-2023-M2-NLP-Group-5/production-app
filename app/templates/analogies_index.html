@@ -3,8 +3,6 @@
 
 {% block content %}
 
-<!-- TODO Add blablabla about the available data and how to make a request -->
-
 <div class="py-5 text-center">
     <h2>Find analogies through time periods</h2>
     <p class="lead px-5">
@@ -30,6 +28,30 @@
             </div>
           </form>
         </div>
+      </div>
+
+      <div class="py-3 text-center">
+        <p class="lead px-5">
+            Words available to query:
+        </p>
+      </div>
+        <div class="my-4 mx-5 shadow-sm">
+          <table class="table table-striped table-hover">
+              <tr class="table-info">
+                  {% for header in headings %}
+                  <th>
+                      {{ header }}
+                  </th>
+                  {% endfor %}
+              </tr>
+              {% for row in data %}
+              <tr>
+                  {% for cell in row %}
+                  <td> {{ cell }}</td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+          </table>
       </div>
     </main>
 </div>
